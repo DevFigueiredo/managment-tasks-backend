@@ -1,0 +1,1 @@
+{"openapi":"3.0.0","paths":{"/task":{"get":{"operationId":"TaskController_create","parameters":[],"responses":{"200":{"description":""}},"tags":["Task (Tarefa)"]}}},"info":{"title":"Artis - API","description":"Artis - API","version":"1.0","contact":{}},"tags":[],"servers":[{"url":"http://127.0.0.1:3000","description":"URL Local"}],"components":{"schemas":{}}}
