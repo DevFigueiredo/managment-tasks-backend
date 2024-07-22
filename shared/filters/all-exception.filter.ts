@@ -54,9 +54,8 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
       });
     }
 
-    const message = exception.message as any;
     this.logger &&
-      this.logger.error(message, {
+      this.logger.error(exception.stack, {
         labels: {
           url: request.url,
         },
@@ -64,7 +63,7 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
 
     return response.status(500).json({
       statusCode: 500,
-      message: exception.message,
+      message: 'Internal Server Error',
       path: request.url,
     });
   }

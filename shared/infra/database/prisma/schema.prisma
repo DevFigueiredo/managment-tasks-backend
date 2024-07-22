@@ -21,7 +21,7 @@ model Task {
   endDate    DateTime      @map("endDate")
   createdAt  DateTime    @default(now()) @map("createdAt")
   updatedAt  DateTime    @updatedAt @map("updatedAt")
-  Status   Status @relation(fields: [statusId], references: [id])
+  Status   Status? @relation(fields: [statusId], references: [id])
   ProjectTask ProjectTask[]
 
   @@map("tasks")
@@ -39,6 +39,7 @@ model Project {
 
   @@map("project")
   ProjectTask ProjectTask[]
+  Status Status[]
 }
 
 model ProjectTask {
@@ -53,10 +54,13 @@ model ProjectTask {
   @@map("projects_tasks")
 }
 model Status {
-  id    String @id @default(cuid()) @map("id")
-  description  String @unique @map("name")
-  type     String      @default("PENDING") @map("status")
-  tasks Task[]
+  id          String   @id @default(cuid()) @map("id")
+  description String   @unique @map("name")
+  color  String   @map("color")
+  type        String   @default("PENDING") @map("status")
+  projectId   String?  @map("projectId") // Torna projectId opcional
+  tasks       Task[]
+  Project     Project? @relation(fields: [projectId], references: [id]) // Torna a relação opcional
 
   @@map("status")
 }
