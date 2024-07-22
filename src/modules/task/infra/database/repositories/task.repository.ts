@@ -9,16 +9,17 @@ export class TaskRepository implements ITaskRepository.Repository {
   constructor(@Inject('db') private readonly db: PrismaClient) {}
 
   async create(task: Task): Promise<PrismaTask> {
+    console.log({ task });
     return this.db.task.create({
       data: {
-        id: task.id || null,
-        statusId: task.statusId || null,
-        text: task.text || null,
-        title: task.title || null,
-        startDate: task.startDate || null,
-        endDate: task.endDate || null,
-        createdAt: task.createdAt || null,
-        updatedAt: task.updatedAt || null,
+        id: task.id || undefined, // Não forneça `null` para o ID
+        statusId: task.statusId, // Certifique-se de que o statusId é fornecido
+        text: task.text || undefined,
+        title: task.title || undefined,
+        startDate: task.startDate || undefined,
+        endDate: task.endDate || undefined,
+        createdAt: task.createdAt || undefined,
+        updatedAt: task.updatedAt || undefined,
       },
     });
   }

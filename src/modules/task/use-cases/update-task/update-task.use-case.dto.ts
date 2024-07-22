@@ -7,6 +7,7 @@ export class UpdateTaskUseCaseRequestDTO extends OmitType(Task, [
   'createdAt',
   'updatedAt',
   'id',
+  'Status',
 ]) {
   id: Task['id'];
   projectId: Project['id'];

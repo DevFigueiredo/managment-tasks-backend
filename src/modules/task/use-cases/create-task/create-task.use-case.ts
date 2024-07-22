@@ -25,6 +25,7 @@ export class CreateTaskUseCase {
       text: parsedData.text,
       startDate: DateNow(),
       endDate: parsedData.endDate,
+      statusId: parsedData.statusId,
     });
 
     await this.taskRepository.addTaskToProject(response.id, data.projectId);
