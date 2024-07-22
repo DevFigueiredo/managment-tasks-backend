@@ -4,14 +4,10 @@ import {
   ProjectRepository,
 } from '../../repositories/project.repository';
 import { GetProjectUseCaseResponseDTO } from './get-projects.use-case.dto';
-import {
-  ITaskRepository,
-  TaskRepository,
-} from '@src/modules/task/infra/database/repositories/task.repository';
-import { Task } from '@shared/domain/task';
-import { StatusEnum } from '@shared/utils/enums/status.enum';
+import { TaskRepository } from '@src/modules/task/infra/database/repositories/task.repository';
 import { calculateCompletionPercentage } from '@shared/utils/calculate-percentage';
 import { checkIfDelayed } from '@shared/utils/check-if-delayed';
+import { ITaskRepository } from '@src/modules/task/infra/database/repositories/interfaces/task-repository-interface';
 
 @Injectable()
 export class GetProjectsUseCase {

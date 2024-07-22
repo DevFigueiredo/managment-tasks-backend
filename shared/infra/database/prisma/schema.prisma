@@ -14,16 +14,19 @@ datasource db {
 
 model Task {
   id         String      @id @default(cuid()) @map("id")
-  status     String      @default("PENDING") @map("status")
   text       String      @map("text")
   title      String      @map("title")
+  statusId String    @map("statusId")
   startDate  DateTime      @map("startDate")
   endDate    DateTime      @map("endDate")
   createdAt  DateTime    @default(now()) @map("createdAt")
   updatedAt  DateTime    @updatedAt @map("updatedAt")
+  Status   Status @relation(fields: [statusId], references: [id])
   ProjectTask ProjectTask[]
 
   @@map("tasks")
+
+
 }
 model Project {
   id          String        @id @default(cuid()) @map("id")
@@ -48,4 +51,12 @@ model ProjectTask {
 
   @@id([projectId, taskId])
   @@map("projects_tasks")
+}
+model Status {
+  id    String @id @default(cuid()) @map("id")
+  description  String @unique @map("name")
+  type     String      @default("PENDING") @map("status")
+  tasks Task[]
+
+  @@map("status")
 }

@@ -5,7 +5,6 @@ import {
   ProjectRepository,
 } from '../../repositories/project.repository';
 import { UpdateProjectUseCaseRequestDTOSchema } from './update-project.use-case.schema';
-import { DateNow } from '@shared/utils/date-now';
 
 @Injectable()
 export class UpdateProjectUseCase {
@@ -21,7 +20,6 @@ export class UpdateProjectUseCase {
       {
         name: parsedData.name,
         description: parsedData.description,
-        startDate: DateNow(),
         endDate: parsedData.endDate,
       },
     );

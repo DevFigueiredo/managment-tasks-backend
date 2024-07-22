@@ -7,12 +7,10 @@ import {
   GetDetailProjectUseCaseRequestDTO,
   GetDetailProjectUseCaseResponseDTO,
 } from './get-detail-projects.use-case.dto';
-import {
-  ITaskRepository,
-  TaskRepository,
-} from '@src/modules/task/infra/database/repositories/task.repository';
+import { TaskRepository } from '@src/modules/task/infra/database/repositories/task.repository';
 import { calculateCompletionPercentage } from '@shared/utils/calculate-percentage';
 import { checkIfDelayed } from '@shared/utils/check-if-delayed';
+import { ITaskRepository } from '@src/modules/task/infra/database/repositories/interfaces/task-repository-interface';
 
 @Injectable()
 export class GetDetailProjectUseCase {

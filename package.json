@@ -9,6 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
+    "seed:run": "env-cmd -f .env.local ts-node shared/infra/database/prisma/seeds/status.seed.ts",
     "start:dev": "env-cmd -f .env.local nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",

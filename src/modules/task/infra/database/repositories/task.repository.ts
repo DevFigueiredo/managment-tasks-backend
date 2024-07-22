@@ -1,31 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PrismaClient, Task as PrismaTask } from '@prisma/client';
 import { Task } from '@shared/domain/task';
-export namespace ITaskRepository {
-  export interface GetParams {
-    projectId: string;
-  }
-  export interface GetOneParams {
-    projectId: string;
-    id: string;
-  }
-  export interface UpdateData extends Partial<Task> {}
-  export interface UpdateParams {
-    id: string;
-  }
-  export interface DeleteParams {
-    id: string;
-  }
-  export interface Repository {
-    create(task: Task): Promise<PrismaTask>;
-    get(params: GetParams): Promise<PrismaTask[]>;
-    getOne(params: GetParams): Promise<PrismaTask | null>;
-    update(params: UpdateParams, task: UpdateData): Promise<PrismaTask>;
-    delete(params: DeleteParams): Promise<PrismaTask>;
-    addTaskToProject(taskId: string, projectId: string): Promise<void>;
-    removeTaskFromProject(taskId: string, projectId: string): Promise<void>;
-  }
-}
+import { ITaskRepository } from './interfaces/task-repository-interface';
+import { PrismaClient } from '@prisma/client';
+import { Task as PrismaTask } from '@prisma/client';
 
 @Injectable()
 export class TaskRepository implements ITaskRepository.Repository {
@@ -33,12 +10,24 @@ export class TaskRepository implements ITaskRepository.Repository {
 
   async create(task: Task): Promise<PrismaTask> {
     return this.db.task.create({
-      data: task,
+      data: {
+        id: task.id || null,
+        statusId: task.statusId || null,
+        text: task.text || null,
+        title: task.title || null,
+        startDate: task.startDate || null,
+        endDate: task.endDate || null,
+        createdAt: task.createdAt || null,
+        updatedAt: task.updatedAt || null,
+      },
     });
   }
 
-  async get(params: ITaskRepository.GetParams): Promise<PrismaTask[]> {
+  async get(params: ITaskRepository.GetParams): Promise<Task[]> {
     return this.db.task.findMany({
+      include: {
+        Status: true,
+      },
       where: {
         ProjectTask: {
           every: {
@@ -49,20 +38,14 @@ export class TaskRepository implements ITaskRepository.Repository {
     });
   }
 
-  async getOne(
-    params: ITaskRepository.GetOneParams,
-  ): Promise<PrismaTask | null> {
+  async getOne(params: ITaskRepository.GetOneParams): Promise<Task | null> {
     return this.db.task.findUnique({
       where: {
         id: params.id,
-        ProjectTask: {
-          every: {
-            projectId: params.projectId,
-          },
-        },
       },
       include: {
         ProjectTask: true,
+        Status: true,
       },
     });
   }
@@ -73,7 +56,15 @@ export class TaskRepository implements ITaskRepository.Repository {
   ): Promise<PrismaTask> {
     return this.db.task.update({
       where: { id: params.id },
-      data: task,
+      data: {
+        statusId: task.statusId,
+        text: task.text,
+        title: task.title,
+        startDate: task.startDate,
+        endDate: task.endDate,
+        createdAt: task.createdAt,
+        updatedAt: task.updatedAt,
+      },
     });
   }
 
@@ -92,17 +83,19 @@ export class TaskRepository implements ITaskRepository.Repository {
     });
   }
 
-  async removeTaskFromProject(
-    taskId: string,
-    projectId: string,
-  ): Promise<void> {
-    await this.db.projectTask.delete({
-      where: {
-        projectId_taskId: {
-          taskId,
-          projectId,
-        },
-      },
+  async removeTaskFromProject(taskId: string): Promise<void> {
+    // Encontre todas as relações associadas ao taskId
+    const projectTasks = await this.db.projectTask.findMany({
+      where: { taskId },
     });
+
+    // Exclua cada relação encontrada
+    const deletePromises = projectTasks.map(({ projectId, taskId }) =>
+      this.db.projectTask.delete({
+        where: { projectId_taskId: { projectId, taskId } },
+      }),
+    );
+
+    await Promise.all(deletePromises);
   }
 }

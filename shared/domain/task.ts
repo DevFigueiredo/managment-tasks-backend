@@ -1,19 +1,23 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { StatusEnum } from 'shared/utils/enums/status.enum';
+import { Status } from './status';
 
 export class Task {
   @ApiProperty()
   id: string;
-  @ApiProperty({ enum: ['pending', 'inprogress', 'closed'] })
-  status: StatusEnum | string;
   @ApiProperty()
   text: string;
   @ApiProperty()
   title: string;
+  @ApiProperty({ type: Date })
+  startDate: Date | string;
+  @ApiProperty({ type: Date })
+  endDate: Date | string;
+
   @ApiProperty()
-  startDate: Date;
-  @ApiProperty()
-  endDate: Date;
+  statusId: string;
+
+  @ApiProperty({ type: Status })
+  Status: Status;
   @ApiProperty()
   createdAt: Date;
   @ApiProperty()
