@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ProjectRepository } from '../../repositories/project.repository';
+import { ProjectRepository } from '../../infra/database/repositories/project.repository';
 import {
   GetDetailProjectUseCaseRequestDTO,
   GetDetailProjectUseCaseResponseDTO,
@@ -8,7 +8,7 @@ import { TaskRepository } from '@src/modules/task/infra/database/repositories/ta
 import { calculateCompletionPercentage } from '@shared/utils/calculate-percentage';
 import { checkIfDelayed } from '@shared/utils/check-if-delayed';
 import { ITaskRepository } from '@src/modules/task/infra/database/repositories/interfaces/task.repository-interface';
-import { IProjectRepository } from '../../repositories/interfaces/project.repository-interface';
+import { IProjectRepository } from '../../infra/database/repositories/interfaces/project.repository-interface';
 
 @Injectable()
 export class GetDetailProjectUseCase {
