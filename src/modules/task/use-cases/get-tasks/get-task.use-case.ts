@@ -5,7 +5,7 @@ import {
   GetTaskUseCaseResponseDTO,
 } from './get-task.use-case.dto';
 import { TaskRepository } from '@src/modules/task/infra/database/repositories/task.repository';
-import { ITaskRepository } from '../../infra/database/repositories/interfaces/task-repository-interface';
+import { ITaskRepository } from '../../infra/database/repositories/interfaces/task.repository-interface';
 
 @Injectable()
 export class GetTaskUseCase {

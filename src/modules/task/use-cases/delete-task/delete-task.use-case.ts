@@ -3,7 +3,7 @@ import { DeleteTaskUseCaseRequestDTO } from './delete-task.use-case.dto';
 
 import { DeleteTaskUseCaseRequestDTOSchema } from './delete-task.use-case.schema';
 import { TaskRepository } from '../../infra/database/repositories/task.repository';
-import { ITaskRepository } from '../../infra/database/repositories/interfaces/task-repository-interface';
+import { ITaskRepository } from '../../infra/database/repositories/interfaces/task.repository-interface';
 
 @Injectable()
 export class DeleteTaskUseCase {

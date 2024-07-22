@@ -3,7 +3,7 @@ import { UpdateTaskUseCaseRequestDTO } from './update-task.use-case.dto';
 
 import { UpdateTaskUseCaseRequestDTOSchema } from './update-task.use-case.schema';
 import { TaskRepository } from '../../infra/database/repositories/task.repository';
-import { ITaskRepository } from '../../infra/database/repositories/interfaces/task-repository-interface';
+import { ITaskRepository } from '../../infra/database/repositories/interfaces/task.repository-interface';
 
 @Injectable()
 export class UpdateTaskUseCase {

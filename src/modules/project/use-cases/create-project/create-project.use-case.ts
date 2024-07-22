@@ -3,12 +3,10 @@ import {
   CreateProjectUseCaseRequestDTO,
   CreateProjectUseCaseResponseDTO,
 } from './create-project.use-case.dto';
-import {
-  IProjectRepository,
-  ProjectRepository,
-} from '../../repositories/project.repository';
+import { ProjectRepository } from '../../repositories/project.repository';
 import { CreateProjectUseCaseRequestDTOSchema } from './create-project.use-case.schema';
 import { DateNow } from '@shared/utils/date-now';
+import { IProjectRepository } from '../../repositories/interfaces/project.repository-interface';
 
 @Injectable()
 export class CreateProjectUseCase {

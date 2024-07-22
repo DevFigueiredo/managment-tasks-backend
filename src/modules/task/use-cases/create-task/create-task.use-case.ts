@@ -7,7 +7,7 @@ import {
 import { CreateTaskUseCaseRequestDTOSchema } from './create-task.use-case.schema';
 import { DateNow } from '@shared/utils/date-now';
 import { TaskRepository } from '../../infra/database/repositories/task.repository';
-import { ITaskRepository } from '../../infra/database/repositories/interfaces/task-repository-interface';
+import { ITaskRepository } from '../../infra/database/repositories/interfaces/task.repository-interface';
 
 @Injectable()
 export class CreateTaskUseCase {

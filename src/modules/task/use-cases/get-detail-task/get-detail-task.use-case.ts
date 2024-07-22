@@ -5,7 +5,7 @@ import {
   GetDetailTaskUseCaseRequestDTO,
   GetDetailTaskUseCaseResponseDTO,
 } from './get-detail-task.use-case.dto';
-import { ITaskRepository } from '../../infra/database/repositories/interfaces/task-repository-interface';
+import { ITaskRepository } from '../../infra/database/repositories/interfaces/task.repository-interface';
 
 @Injectable()
 export class GetDetailTaskUseCase {
