@@ -9,7 +9,6 @@ export class TaskRepository implements ITaskRepository.Repository {
   constructor(@Inject('db') private readonly db: PrismaClient) {}
 
   async create(task: Task): Promise<PrismaTask> {
-    console.log({ task });
     return this.db.task.create({
       data: {
         id: task.id || undefined, // Não forneça `null` para o ID
@@ -28,6 +27,11 @@ export class TaskRepository implements ITaskRepository.Repository {
     return this.db.task.findMany({
       include: {
         Status: true,
+        ProjectTask: {
+          select: {
+            Project: true,
+          },
+        },
       },
       where: {
         ProjectTask: {
@@ -45,7 +49,11 @@ export class TaskRepository implements ITaskRepository.Repository {
         id: params.id,
       },
       include: {
-        ProjectTask: true,
+        ProjectTask: {
+          select: {
+            Project: true,
+          },
+        },
         Status: true,
       },
     });

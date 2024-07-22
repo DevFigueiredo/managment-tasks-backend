@@ -7,6 +7,7 @@ export class CreateTaskUseCaseRequestDTO extends OmitType(Task, [
   'updatedAt',
   'id',
   'Status',
+  'ProjectTask',
 ]) {
   @ApiProperty({ type: String })
   projectId: Task['id'];

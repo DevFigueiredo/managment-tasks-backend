@@ -1,6 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Status } from './status';
-
+import { Project } from './project';
+export class ProjectTasks {
+  @ApiProperty()
+  Project: Project;
+}
 export class Task {
   @ApiProperty()
   id: string;
@@ -18,6 +22,8 @@ export class Task {
 
   @ApiProperty({ type: Status })
   Status: Status;
+  @ApiProperty({ type: ProjectTasks, isArray: true })
+  ProjectTask: ProjectTasks[];
   @ApiProperty()
   createdAt: Date;
   @ApiProperty()
