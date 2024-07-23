@@ -15,13 +15,27 @@ export namespace ITaskRepository {
   export interface DeleteParams {
     id: string;
   }
+
+  export interface UpdateTaskPositionsParams {
+    projectId: string;
+    tasks: {
+      taskId: string;
+      position: number;
+    }[];
+  }
+
   export interface Repository {
     create(task: Partial<Task>): Promise<PrismaTask>;
     get(params: GetParams): Promise<Task[]>;
     getOne(params: GetOneParams): Promise<Task | null>;
     update(params: UpdateParams, task: UpdateData): Promise<PrismaTask>;
     delete(params: DeleteParams): Promise<PrismaTask>;
-    addTaskToProject(taskId: string, projectId: string): Promise<void>;
+    addTaskToProject(
+      taskId: string,
+      projectId: string,
+      position?: number,
+    ): Promise<void>;
     removeTaskFromProject(taskId: string): Promise<void>;
+    updateTaskPositions(params: UpdateTaskPositionsParams): Promise<void>;
   }
 }

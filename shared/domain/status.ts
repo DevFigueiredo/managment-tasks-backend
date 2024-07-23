@@ -17,6 +17,9 @@ export class Status {
 
   @ApiProperty()
   color: string;
+
+  @ApiProperty()
+  default: boolean;
   @ApiProperty()
   projectId?: string;
 }

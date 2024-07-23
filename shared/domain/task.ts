@@ -4,6 +4,12 @@ import { Project } from './project';
 export class ProjectTasks {
   @ApiProperty()
   Project: Project;
+  @ApiProperty()
+  position: number;
+  @ApiProperty()
+  projectId: string;
+  @ApiProperty()
+  taskId: string;
 }
 export class Task {
   @ApiProperty()

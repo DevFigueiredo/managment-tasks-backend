@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 export const UpdateTaskUseCaseRequestDTOSchema = z.object({
-  id: z.string().min(1, 'ID is required'), // Assuming ID is a UUID
-  statusId: z.string().optional(), // Assuming Status ID is a UUID
+  id: z.string().min(1, 'ID is required'),
+  statusId: z.string().optional(),
   text: z.string().optional(),
   title: z.string().optional(),
   endDate: z

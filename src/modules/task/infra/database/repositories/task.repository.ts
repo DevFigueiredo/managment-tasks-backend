@@ -11,24 +11,27 @@ export class TaskRepository implements ITaskRepository.Repository {
   async create(task: Task): Promise<PrismaTask> {
     return this.db.task.create({
       data: {
-        id: task.id || undefined, // Não forneça `null` para o ID
-        statusId: task.statusId, // Certifique-se de que o statusId é fornecido
-        text: task.text || undefined,
-        title: task.title || undefined,
-        startDate: task.startDate || undefined,
-        endDate: task.endDate || undefined,
-        createdAt: task.createdAt || undefined,
-        updatedAt: task.updatedAt || undefined,
+        id: task.id,
+        statusId: task.statusId,
+        text: task.text,
+        title: task.title,
+        startDate: task.startDate,
+        endDate: task.endDate,
+        createdAt: task.createdAt,
+        updatedAt: task.updatedAt,
       },
     });
   }
 
   async get(params: ITaskRepository.GetParams): Promise<Task[]> {
-    return this.db.task.findMany({
+    const tasks = await this.db.task.findMany({
       include: {
         Status: true,
         ProjectTask: {
           select: {
+            projectId: true,
+            position: true,
+            taskId: true,
             Project: true,
           },
         },
@@ -41,6 +44,13 @@ export class TaskRepository implements ITaskRepository.Repository {
         },
       },
     });
+    tasks.sort((a, b) => {
+      const positionA = a.ProjectTask[0]?.position ?? 0;
+      const positionB = b.ProjectTask[0]?.position ?? 0;
+      return positionA - positionB;
+    });
+
+    return tasks;
   }
 
   async getOne(params: ITaskRepository.GetOneParams): Promise<Task | null> {
@@ -51,6 +61,9 @@ export class TaskRepository implements ITaskRepository.Repository {
       include: {
         ProjectTask: {
           select: {
+            projectId: true,
+            position: true,
+            taskId: true,
             Project: true,
           },
         },
@@ -83,22 +96,25 @@ export class TaskRepository implements ITaskRepository.Repository {
     });
   }
 
-  async addTaskToProject(taskId: string, projectId: string): Promise<void> {
+  async addTaskToProject(
+    taskId: string,
+    projectId: string,
+    position?: number,
+  ): Promise<void> {
     await this.db.projectTask.create({
       data: {
         taskId,
         projectId,
+        position,
       },
     });
   }
 
   async removeTaskFromProject(taskId: string): Promise<void> {
-    // Encontre todas as relações associadas ao taskId
     const projectTasks = await this.db.projectTask.findMany({
       where: { taskId },
     });
 
-    // Exclua cada relação encontrada
     const deletePromises = projectTasks.map(({ projectId, taskId }) =>
       this.db.projectTask.delete({
         where: { projectId_taskId: { projectId, taskId } },
@@ -106,5 +122,27 @@ export class TaskRepository implements ITaskRepository.Repository {
     );
 
     await Promise.all(deletePromises);
+  }
+
+  async updateTaskPositions(
+    params: ITaskRepository.UpdateTaskPositionsParams,
+  ): Promise<void> {
+    const { projectId, tasks } = params;
+
+    await this.db.$transaction(
+      tasks.map((task) =>
+        this.db.projectTask.update({
+          where: {
+            projectId_taskId: {
+              projectId,
+              taskId: task.taskId,
+            },
+          },
+          data: {
+            position: task.position,
+          },
+        }),
+      ),
+    );
   }
 }

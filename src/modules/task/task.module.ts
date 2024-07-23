@@ -9,6 +9,8 @@ import { GetDetailTaskUseCase } from './use-cases/get-detail-task/get-detail-tas
 import { DeleteTaskUseCase } from './use-cases/delete-task/delete-task.use-case';
 import { TaskRepository } from './infra/database/repositories/task.repository';
 import { CreateTaskUseCase } from './use-cases/create-task/create-task.use-case';
+import { UpdatePositionTaskUseCase } from './use-cases/update-position-tasks/update-position-task.use-case';
+import { ProjectRepository } from '../project/infra/database/repositories/project.repository';
 
 @Module({
   imports: [
@@ -24,7 +26,9 @@ import { CreateTaskUseCase } from './use-cases/create-task/create-task.use-case'
     GetTaskUseCase,
     GetDetailTaskUseCase,
     DeleteTaskUseCase,
+    UpdatePositionTaskUseCase,
     TaskRepository,
+    ProjectRepository,
   ],
 })
 export class TaskModule {}

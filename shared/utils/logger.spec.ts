@@ -17,7 +17,6 @@ describe('Logger', () => {
     };
 
     Object.assign(winston, {
-      // format,
       createLogger,
       transports,
     });

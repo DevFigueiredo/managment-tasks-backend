@@ -14,11 +14,11 @@ datasource db {
 
 model Task {
   id         String      @id @default(cuid()) @map("id")
-  text       String      @map("text")
-  title      String      @map("title")
+  text       String?      @map("text")
+  title      String?      @map("title")
   statusId String    @map("statusId")
-  startDate  DateTime      @map("startDate")
-  endDate    DateTime      @map("endDate")
+  startDate  DateTime?      @map("startDate")
+  endDate    DateTime?      @map("endDate")
   createdAt  DateTime    @default(now()) @map("createdAt")
   updatedAt  DateTime    @updatedAt @map("updatedAt")
   Status   Status? @relation(fields: [statusId], references: [id])
@@ -46,7 +46,7 @@ model ProjectTask {
   projectId String    @map("projectId")
   taskId    String @map("taskId")
   createdAt   DateTime   @default(now())
-
+  position   Int?         @map("position")
   Project   Project @relation(fields: [projectId], references: [id])
   Task      Task    @relation(fields: [taskId], references: [id])
 
@@ -58,6 +58,7 @@ model Status {
   description String   @unique @map("name")
   color  String   @map("color")
   type        String   @default("PENDING") @map("status")
+  default        Boolean   @default(false) @map("default")
   projectId   String?  @map("projectId") // Torna projectId opcional
   tasks       Task[]
   Project     Project? @relation(fields: [projectId], references: [id]) // Torna a relação opcional

@@ -4,16 +4,23 @@ import { Logger } from '@nestjs/common';
 
 async function main() {
   const statuList = [
-    { description: 'Pendente', type: StatusTypeEnum.pending, color: '#FF0000' }, // Vermelho
+    {
+      description: 'Pendente',
+      type: StatusTypeEnum.pending,
+      color: '#FF0000',
+      default: true,
+    }, // Vermelho
     {
       description: 'Em Progresso',
       type: StatusTypeEnum.inprogress,
       color: '#FFFF00',
+      default: false,
     }, // Amarelo
     {
       description: 'Finalizada',
       type: StatusTypeEnum.closed,
       color: '#00FF00',
+      default: false,
     }, // Verde
   ];
 
@@ -25,6 +32,7 @@ async function main() {
         description: status.description,
         type: status.type,
         color: status.color,
+        default: status.default,
       },
     });
   }
