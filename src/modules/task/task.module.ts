@@ -11,6 +11,7 @@ import { TaskRepository } from './infra/database/repositories/task.repository';
 import { CreateTaskUseCase } from './use-cases/create-task/create-task.use-case';
 import { UpdatePositionTaskUseCase } from './use-cases/update-position-tasks/update-position-task.use-case';
 import { ProjectRepository } from '../project/infra/database/repositories/project.repository';
+import { StatusRepository } from '../status/infra/database/repositories/status.repository';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ProjectRepository } from '../project/infra/database/repositories/projec
     UpdatePositionTaskUseCase,
     TaskRepository,
     ProjectRepository,
+    StatusRepository,
   ],
 })
 export class TaskModule {}

@@ -6,4 +6,8 @@ export const CreateProjectUseCaseRequestDTOSchema = z.object({
   endDate: z
     .string()
     .refine((val) => !isNaN(Date.parse(val)), 'Invalid end date'),
+  startDate: z
+    .string()
+    .refine((val) => !isNaN(Date.parse(val)), 'Invalid end date')
+    .optional(),
 });

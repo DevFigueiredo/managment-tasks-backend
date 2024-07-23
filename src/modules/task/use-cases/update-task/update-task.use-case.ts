@@ -5,10 +5,16 @@ import { TaskRepository } from '../../infra/database/repositories/task.repositor
 import { ITaskRepository } from '../../infra/database/repositories/interfaces/task.repository-interface';
 import { IProjectRepository } from '@src/modules/project/infra/database/repositories/interfaces/project.repository-interface';
 import { ProjectRepository } from '@src/modules/project/infra/database/repositories/project.repository';
+import { StatusRepository } from '@src/modules/status/infra/database/repositories/status.repository';
+import { IStatusRepository } from '@src/modules/status/infra/database/repositories/interfaces/status.repository-interface';
+import { StatusTypeEnum } from '@shared/utils/enums/status.enum';
+import { DateNow } from '@shared/utils/date-now';
 
 @Injectable()
 export class UpdateTaskUseCase {
   constructor(
+    @Inject(StatusRepository)
+    private readonly statusRepository: IStatusRepository.Repository,
     @Inject(TaskRepository)
     private readonly taskRepository: ITaskRepository.Repository,
     @Inject(ProjectRepository)
@@ -21,12 +27,22 @@ export class UpdateTaskUseCase {
     if (!task) {
       throw new NotFoundException(`Task not found`);
     }
+
+    const status = await this.statusRepository.getOne({ id: data.statusId });
+    if (!status) {
+      throw new NotFoundException(`Status not found`);
+    }
+
     await this.validateProjectExistence(data.projectId);
     const response = await this.taskRepository.update(
       { id: data.id },
       {
         title: parsedData.title,
         text: parsedData.text,
+        startDate:
+          !task.endDate && status.type === StatusTypeEnum.inprogress
+            ? DateNow()
+            : undefined,
         endDate: parsedData.endDate,
         statusId: parsedData.statusId,
       },

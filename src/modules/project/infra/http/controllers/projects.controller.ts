@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -14,6 +15,7 @@ import {
   CreateProjectUseCaseRequestDTO,
   CreateProjectUseCaseResponseDTO,
 } from '@src/modules/project/use-cases/create-project/create-project.use-case.dto';
+import { DeleteProjectUseCase } from '@src/modules/project/use-cases/delete-project/delete-project.use-case';
 import { GetDetailProjectUseCase } from '@src/modules/project/use-cases/get-detail-projects/get-detail-projects.use-case';
 import { GetDetailProjectUseCaseResponseDTO } from '@src/modules/project/use-cases/get-detail-projects/get-detail-projects.use-case.dto';
 import { GetProjectsUseCase } from '@src/modules/project/use-cases/get-projects/get-projects.use-case';
@@ -29,6 +31,7 @@ export class ProjectController {
     private readonly createProjectUseCase: CreateProjectUseCase,
     private readonly updateProjectUseCase: UpdateProjectUseCase,
     private readonly getDetailProjectUseCase: GetDetailProjectUseCase,
+    private readonly deleteProjectUseCase: DeleteProjectUseCase,
   ) {}
 
   @Get()
@@ -60,5 +63,11 @@ export class ProjectController {
     @Param('id') id: string,
   ): Promise<GetDetailProjectUseCaseResponseDTO> {
     return this.getDetailProjectUseCase.execute({ id });
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  delete(@Param('id') id: string): Promise<void> {
+    return this.deleteProjectUseCase.execute({ id });
   }
 }

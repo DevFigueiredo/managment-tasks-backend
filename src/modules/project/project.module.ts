@@ -9,6 +9,7 @@ import { ProjectRepository } from './infra/database/repositories/project.reposit
 import { TaskRepository } from '../task/infra/database/repositories/task.repository';
 import { UpdateProjectUseCase } from './use-cases/update-project/update-project.use-case';
 import { GetDetailProjectUseCase } from './use-cases/get-detail-projects/get-detail-projects.use-case';
+import { DeleteProjectUseCase } from './use-cases/delete-project/delete-project.use-case';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { GetDetailProjectUseCase } from './use-cases/get-detail-projects/get-det
     CreateProjectUseCase,
     UpdateProjectUseCase,
     GetDetailProjectUseCase,
+    DeleteProjectUseCase,
     ProjectRepository,
     TaskRepository,
   ],

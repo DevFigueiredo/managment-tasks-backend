@@ -4,7 +4,6 @@ import {
   CreateTaskUseCaseResponseDTO,
 } from './create-task.use-case.dto';
 import { CreateTaskUseCaseRequestDTOSchema } from './create-task.use-case.schema';
-import { DateNow } from '@shared/utils/date-now';
 import { TaskRepository } from '../../infra/database/repositories/task.repository';
 import { ITaskRepository } from '../../infra/database/repositories/interfaces/task.repository-interface';
 import { IProjectRepository } from '@src/modules/project/infra/database/repositories/interfaces/project.repository-interface';
@@ -29,7 +28,6 @@ export class CreateTaskUseCase {
     const response = await this.taskRepository.create({
       title: parsedData.title,
       text: parsedData.text,
-      startDate: DateNow(),
       endDate: parsedData.endDate,
       statusId: parsedData.statusId,
     });

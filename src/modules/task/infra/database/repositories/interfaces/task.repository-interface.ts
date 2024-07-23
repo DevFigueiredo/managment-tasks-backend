@@ -15,6 +15,9 @@ export namespace ITaskRepository {
   export interface DeleteParams {
     id: string;
   }
+  export interface DeleteAllParams {
+    projectId: string;
+  }
 
   export interface UpdateTaskPositionsParams {
     projectId: string;
@@ -37,5 +40,6 @@ export namespace ITaskRepository {
     ): Promise<void>;
     removeTaskFromProject(taskId: string): Promise<void>;
     updateTaskPositions(params: UpdateTaskPositionsParams): Promise<void>;
+    deleteAll(params: DeleteAllParams): Promise<void>;
   }
 }

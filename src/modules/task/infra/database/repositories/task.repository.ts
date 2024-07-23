@@ -123,6 +123,24 @@ export class TaskRepository implements ITaskRepository.Repository {
 
     await Promise.all(deletePromises);
   }
+  async deleteAll({
+    projectId,
+  }: ITaskRepository.DeleteAllParams): Promise<void> {
+    await this.db.$transaction(async (transaction) => {
+      await transaction.projectTask.deleteMany({
+        where: { projectId },
+      });
+      await transaction.task.deleteMany({
+        where: {
+          ProjectTask: {
+            every: {
+              projectId,
+            },
+          },
+        },
+      });
+    });
+  }
 
   async updateTaskPositions(
     params: ITaskRepository.UpdateTaskPositionsParams,

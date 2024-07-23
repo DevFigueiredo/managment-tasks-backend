@@ -27,7 +27,6 @@ export class GetDetailProjectUseCase {
 
     const completionPercentage = calculateCompletionPercentage(tasks);
     const isDelayed = checkIfDelayed(project.endDate, completionPercentage);
-    console.log(tasks);
     return {
       ...project,
       completionPercentage: completionPercentage,
