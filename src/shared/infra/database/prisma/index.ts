@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { Module } from '@nestjs/common';
 
 export const prisma = new PrismaClient({
-  log: ['query', 'info', 'warn'],
+  log: ['warn', 'error'],
 });
 @Module({
   imports: [],
