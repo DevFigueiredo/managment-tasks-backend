@@ -71,3 +71,11 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+- [] Dar Nome as API's no Swagger
+- [] Explicar sobre CI e CD que tem no github actions
+- [] Variaveis de ambiente
+- [] Configurar Postgres Local
+- [] Modelo de Dados
+- [] Expique sobre os Testes usados e as coberturas
+- [] Notas e Considerações Finais
