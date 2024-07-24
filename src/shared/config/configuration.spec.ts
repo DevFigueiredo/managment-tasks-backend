@@ -28,9 +28,8 @@ describe('configuration', () => {
   });
 
   test('returns database host and port correctly', () => {
-    mockEnv({ DATABASE_HOST: 'localhost', DATABASE_PORT: '5433' });
+    mockEnv({ DATABASE_URL: 'localhost' });
     const config = configuration();
-    expect(config.database.host).toBe('localhost');
-    expect(config.database.port).toBe(5433);
+    expect(config.database.url).toBe('localhost');
   });
 });

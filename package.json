@@ -73,8 +73,8 @@
       "ts"
     ],
     "collectCoverageFrom": [
-      "**/*.(t|j)s",
-      "!src/challenge/src/main.ts",
+      "src/**/*.(t|j)s",
+      "!src/main.ts",
       "!src/**/*.module.ts",
       "!src/**/*.dto.ts",
       "!src/**/*.factory.ts",
@@ -83,7 +83,8 @@
       "!src/shared/utils/database.(t|j)s",
       "!src/shared/utils/function-export.(t|j)s",
       "!src/shared/utils/create-server.(t|j)s",
-      "!src/shared/middlewares/logger-middleware.ts"
+      "!src/shared/middlewares/logger-middleware.ts",
+      "!src/shared/infra/database/prisma/**/*.ts"
     ],
     "rootDir": ".",
     "testRegex": ".*\\.spec\\.ts$",
