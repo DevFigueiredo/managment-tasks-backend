@@ -69,3 +69,6 @@ jobs:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           curl "$deploy_url"
+
+      - name: Deploy URL
+        run: echo "https://managment-tasks-backend-latest.onrender.com"
