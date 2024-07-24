@@ -1,4 +1,3 @@
-import { Project as PrismaProject } from '@prisma/client';
 import { Project } from '@shared/domain/project';
 
 export namespace IProjectRepository {
@@ -16,10 +15,10 @@ export namespace IProjectRepository {
     id: string;
   }
   export interface Repository {
-    create(project: Partial<Project>): Promise<PrismaProject>;
-    get(): Promise<PrismaProject[]>;
-    getOne(params: GetOneParams): Promise<PrismaProject | null>;
-    update(params: UpdateParams, project: UpdateData): Promise<PrismaProject>;
-    delete(params: DeleteParams): Promise<PrismaProject>;
+    create(project: Partial<Project>): Promise<Project>;
+    get(): Promise<Project[]>;
+    getOne(params: GetOneParams): Promise<Project | null>;
+    update(params: UpdateParams, project: UpdateData): Promise<Project>;
+    delete(params: DeleteParams): Promise<Project>;
   }
 }

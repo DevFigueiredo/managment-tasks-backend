@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { Status } from '@shared/domain/status';
 import { StatusTypeEnum } from '@shared/utils/enums/status.enum';
 
-export const StatusFactory = (): Status => {
+export const StatusFactory = (status?: Partial<Status>): Status => {
   const statusTypes = [
     StatusTypeEnum.pending,
     StatusTypeEnum.closed,
@@ -15,6 +15,7 @@ export const StatusFactory = (): Status => {
     type: statusTypes[Math.floor(Math.random() * statusTypes.length)],
     color: faker.color.rgb(),
     default: faker.datatype.boolean(),
-    projectId: faker.datatype.uuid(),
+    projectId: faker.string.uuid(),
+    ...status,
   };
 };

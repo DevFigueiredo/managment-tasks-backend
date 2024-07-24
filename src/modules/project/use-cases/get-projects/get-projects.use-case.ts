@@ -22,7 +22,10 @@ export class GetProjectsUseCase {
       const tasks = await this.taskRepository.get({ projectId: project.id });
 
       const completionPercentage = calculateCompletionPercentage(tasks);
-      const isDelayed = checkIfDelayed(project.endDate, completionPercentage);
+      const isDelayed = checkIfDelayed(
+        project.endDate as Date,
+        completionPercentage,
+      );
       return {
         ...project,
         completionPercentage: completionPercentage,

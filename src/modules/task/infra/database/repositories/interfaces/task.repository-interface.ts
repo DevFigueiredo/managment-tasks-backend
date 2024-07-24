@@ -1,4 +1,3 @@
-import { Task as PrismaTask } from '@prisma/client';
 import { Task } from '@shared/domain/task';
 
 export namespace ITaskRepository {
@@ -28,11 +27,11 @@ export namespace ITaskRepository {
   }
 
   export interface Repository {
-    create(task: Partial<Task>): Promise<PrismaTask>;
+    create(task: Partial<Task>): Promise<Task>;
     get(params: GetParams): Promise<Task[]>;
     getOne(params: GetOneParams): Promise<Task | null>;
-    update(params: UpdateParams, task: UpdateData): Promise<PrismaTask>;
-    delete(params: DeleteParams): Promise<PrismaTask>;
+    update(params: UpdateParams, task: UpdateData): Promise<void>;
+    delete(params: DeleteParams): Promise<void>;
     addTaskToProject(
       taskId: string,
       projectId: string,

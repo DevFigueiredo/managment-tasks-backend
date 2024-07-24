@@ -31,6 +31,7 @@ describe('Logger', () => {
     expect(winston.createLogger).toHaveBeenCalledWith({
       format: expect.anything(),
       transports: [new winston.transports.Console()],
+      level: 'debug',
     });
   });
 

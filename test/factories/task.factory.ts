@@ -3,7 +3,7 @@ import { Task } from '@shared/domain/task';
 import { StatusFactory } from './status.factory';
 import { ProjectTasksFactory } from './project-task.factory';
 
-export const TaskFactory = (): Task => {
+export const TaskFactory = (task?: Partial<Task>): Task => {
   return {
     id: faker.string.uuid(),
     text: faker.lorem.paragraph(),
@@ -15,5 +15,6 @@ export const TaskFactory = (): Task => {
     ProjectTask: Array.from({ length: 3 }, ProjectTasksFactory),
     createdAt: faker.date.past(),
     updatedAt: faker.date.recent(),
+    ...task,
   };
 };

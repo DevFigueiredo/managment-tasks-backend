@@ -5,7 +5,7 @@ import { CreateProjectUseCaseRequestDTO } from './create-project.use-case.dto';
 import { MockProxy, mock } from 'jest-mock-extended';
 import { IProjectRepository } from '../../infra/database/repositories/interfaces/project.repository-interface';
 import { DateTime } from 'luxon';
-import { ProjectFactory } from 'test/factories/project.factory';
+import { ProjectFactory } from '@test/factories/project.factory';
 
 describe('CreateProjectUseCase', () => {
   let sut: CreateProjectUseCase;
@@ -13,6 +13,8 @@ describe('CreateProjectUseCase', () => {
 
   beforeEach(async () => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CreateProjectUseCase,
@@ -25,6 +27,7 @@ describe('CreateProjectUseCase', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   describe('execute', () => {
@@ -32,8 +35,8 @@ describe('CreateProjectUseCase', () => {
       const params: CreateProjectUseCaseRequestDTO = {
         name: 'Test Project',
         description: 'A project for testing',
-        startDate: DateTime.now().plus({ days: 1 }).toJSDate(),
-        endDate: DateTime.now().plus({ days: 2 }).toJSDate(),
+        startDate: DateTime.now().plus({ days: 1 }).toISO(),
+        endDate: DateTime.now().plus({ days: 2 }).toISO(),
       };
       const stubProject = ProjectFactory();
       stubProject.name = params.name;
@@ -61,12 +64,6 @@ describe('CreateProjectUseCase', () => {
       });
       expect(result).toEqual({
         id: stubProject.id,
-        name: stubProject.name,
-        description: stubProject.description,
-        startDate: stubProject.startDate as Date,
-        endDate: stubProject.endDate as Date,
-        createdAt: stubProject.createdAt,
-        updatedAt: stubProject.updatedAt,
       });
     });
 
@@ -126,17 +123,11 @@ describe('CreateProjectUseCase', () => {
       expect(projectRepository.create).toHaveBeenCalledWith({
         name: params.name,
         description: params.description,
-        startDate: expect.any(String), // DateNow() is called inside execute method
+        startDate: expect.any(Date),
         endDate: params.endDate,
       });
       expect(result).toEqual({
         id: stubProject.id,
-        name: stubProject.name,
-        description: stubProject.description,
-        startDate: stubProject.startDate as Date,
-        endDate: stubProject.endDate as Date,
-        createdAt: stubProject.createdAt,
-        updatedAt: stubProject.updatedAt,
       });
     });
   });

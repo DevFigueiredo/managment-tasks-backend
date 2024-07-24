@@ -73,29 +73,30 @@
       "ts"
     ],
     "collectCoverageFrom": [
-      "apps/**/*.(t|j)s",
-      "shared/**/*.(t|j)s",
-      "!apps/challenge/src/triggers/*.(t|j)s",
-      "!apps/challenge/src/function.ts",
-      "!apps/challenge/src/main.ts",
-      "!apps/**/*.module.ts",
-      "!shared/@types/**/*.(t|j)s",
-      "!shared/test/**/*.(t|j)s",
-      "!shared/utils/database.(t|j)s",
-      "!shared/utils/function-export.(t|j)s",
-      "!shared/utils/create-server.(t|j)s",
-      "!shared/middlewares/logger-middleware.ts"
+      "**/*.(t|j)s",
+      "!src/challenge/src/main.ts",
+      "!src/**/*.module.ts",
+      "!src/**/*.dto.ts",
+      "!src/**/*.factory.ts",
+      "!src/shared/@types/**/*.(t|j)s",
+      "!src/shared/test/**/*.(t|j)s",
+      "!src/shared/utils/database.(t|j)s",
+      "!src/shared/utils/function-export.(t|j)s",
+      "!src/shared/utils/create-server.(t|j)s",
+      "!src/shared/middlewares/logger-middleware.ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "moduleNameMapper": {
-      "^@shared/(.*)$": "<rootDir>/shared/$1",
-      "^@modules/(.*)$": "<rootDir>/src/modules/$1"
+      "^@src/(.*)$": "<rootDir>/src/$1",
+      "^@shared/(.*)$": "<rootDir>/src/shared/$1",
+      "^@modules/(.*)$": "<rootDir>/src/modules/$1",
+      "^@test/(.*)$": "<rootDir>/test/$1"
     },
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "./coverage",
     "testEnvironment": "node"
   }
 }

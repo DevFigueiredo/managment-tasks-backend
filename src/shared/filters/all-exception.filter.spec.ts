@@ -70,16 +70,16 @@ describe('AllExceptionsFilter', () => {
   });
 
   it('should catch other exceptions and respond with status 500 and error message', () => {
-    const error = new Error('Internal server error');
+    const error = new Error('Internal Server Error');
     filter.catch(error, argumentsHost);
     expect(responseFunction).toHaveBeenCalledTimes(1);
     expect(responseFunction).toHaveBeenCalledWith({
-      message: 'Internal server error',
+      message: 'Internal Server Error',
       path: url,
       statusCode: 500,
     });
     expect(mockLogger.error).toHaveBeenCalledTimes(1);
-    expect(mockLogger.error).toHaveBeenCalledWith(error.message, {
+    expect(mockLogger.error).toHaveBeenCalledWith(error.stack, {
       labels: {
         url,
       },

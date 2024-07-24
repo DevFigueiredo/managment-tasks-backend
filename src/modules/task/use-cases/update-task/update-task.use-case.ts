@@ -34,7 +34,7 @@ export class UpdateTaskUseCase {
     }
 
     await this.validateProjectExistence(data.projectId);
-    const response = await this.taskRepository.update(
+    await this.taskRepository.update(
       { id: data.id },
       {
         title: parsedData.title,
@@ -48,9 +48,9 @@ export class UpdateTaskUseCase {
       },
     );
 
-    await this.taskRepository.removeTaskFromProject(response.id);
+    await this.taskRepository.removeTaskFromProject(data.id);
     await this.taskRepository.addTaskToProject(
-      response.id,
+      data.id,
       data.projectId,
       task.ProjectTask.find(
         (projectTask) =>

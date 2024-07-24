@@ -2,13 +2,12 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Task } from '@shared/domain/task';
 import { ITaskRepository } from './interfaces/task.repository-interface';
 import { PrismaClient } from '@prisma/client';
-import { Task as PrismaTask } from '@prisma/client';
 
 @Injectable()
 export class TaskRepository implements ITaskRepository.Repository {
   constructor(@Inject('db') private readonly db: PrismaClient) {}
 
-  async create(task: Task): Promise<PrismaTask> {
+  async create(task: Task): Promise<Task> {
     return this.db.task.create({
       data: {
         id: task.id,
@@ -19,6 +18,17 @@ export class TaskRepository implements ITaskRepository.Repository {
         endDate: task.endDate,
         createdAt: task.createdAt,
         updatedAt: task.updatedAt,
+      },
+      include: {
+        Status: true,
+        ProjectTask: {
+          select: {
+            projectId: true,
+            position: true,
+            taskId: true,
+            Project: true,
+          },
+        },
       },
     });
   }
@@ -75,8 +85,8 @@ export class TaskRepository implements ITaskRepository.Repository {
   async update(
     params: ITaskRepository.UpdateParams,
     task: ITaskRepository.UpdateData,
-  ): Promise<PrismaTask> {
-    return this.db.task.update({
+  ): Promise<void> {
+    await this.db.task.update({
       where: { id: params.id },
       data: {
         statusId: task.statusId,
@@ -90,8 +100,8 @@ export class TaskRepository implements ITaskRepository.Repository {
     });
   }
 
-  async delete(params: ITaskRepository.DeleteParams): Promise<PrismaTask> {
-    return this.db.task.delete({
+  async delete(params: ITaskRepository.DeleteParams): Promise<void> {
+    await this.db.task.delete({
       where: { id: params.id },
     });
   }

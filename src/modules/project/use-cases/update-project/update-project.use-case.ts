@@ -24,7 +24,7 @@ export class UpdateProjectUseCase {
     const today = DateTime.now().startOf('day');
     const newEndDate = DateTime.fromISO(parsedData.endDate).startOf('day');
     const currentStartDate = DateTime.fromJSDate(
-      currentProject.startDate,
+      currentProject.startDate as Date,
     ).startOf('day');
 
     // Validation: endDate should not be less than today
@@ -43,7 +43,7 @@ export class UpdateProjectUseCase {
       {
         name: parsedData.name,
         description: parsedData.description,
-        endDate: parsedData.endDate,
+        endDate: parsedData.endDate as string,
       },
     );
   }

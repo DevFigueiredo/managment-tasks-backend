@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Project } from '@shared/domain/project';
 
-export const ProjectFactory = (): Project => {
+export const ProjectFactory = (project?: Partial<Project>): Project => {
   return {
     id: faker.string.uuid(),
     name: faker.company.name(),
@@ -10,5 +10,6 @@ export const ProjectFactory = (): Project => {
     endDate: faker.date.future(),
     createdAt: faker.date.past(),
     updatedAt: faker.date.recent(),
+    ...project,
   };
 };

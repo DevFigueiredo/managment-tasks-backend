@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ProjectRepository } from '../../infra/database/repositories/project.repository';
 import {
   GetDetailProjectUseCaseRequestDTO,
@@ -22,11 +22,16 @@ export class GetDetailProjectUseCase {
     params: GetDetailProjectUseCaseRequestDTO,
   ): Promise<GetDetailProjectUseCaseResponseDTO> {
     const project = await this.projectRepository.getOne({ id: params.id });
-
+    if (!project) {
+      throw new BadRequestException('Project not found');
+    }
     const tasks = await this.taskRepository.get({ projectId: project.id });
 
     const completionPercentage = calculateCompletionPercentage(tasks);
-    const isDelayed = checkIfDelayed(project.endDate, completionPercentage);
+    const isDelayed = checkIfDelayed(
+      project.endDate as Date,
+      completionPercentage,
+    );
     return {
       ...project,
       completionPercentage: completionPercentage,

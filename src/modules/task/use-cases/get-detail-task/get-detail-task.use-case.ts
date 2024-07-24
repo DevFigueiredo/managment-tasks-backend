@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 
 import { TaskRepository } from '@src/modules/task/infra/database/repositories/task.repository';
 import {
@@ -19,6 +19,9 @@ export class GetDetailTaskUseCase {
     const task = await this.taskRepository.getOne({
       id: params.id,
     });
+    if (!task) {
+      throw new NotFoundException('Task not found');
+    }
 
     return task;
   }
