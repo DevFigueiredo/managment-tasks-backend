@@ -62,7 +62,7 @@ jobs:
             -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
             danielfigueiredo/managment-tasks-backend:${{env.VERSION}} \
             npx prisma migrate deploy
-      - name: Run seeds
+      - name: Run database seeds
         run: |
           docker run --rm \
             -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
