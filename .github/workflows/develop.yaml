@@ -63,7 +63,7 @@ jobs:
             danielfigueiredo/managment-tasks-backend:${{env.VERSION}} \
             npx prisma migrate deploy
 
-      - name: Deploy
+      - name: Deploy (Webhook Trigger - Render)
         if: github.ref == 'refs/heads/develop'
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
