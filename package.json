@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "seed:run": "env-cmd -f .env.local ts-node shared/infra/database/prisma/seeds/status.seed.ts",
+    "seed:run": "env-cmd -f .env.local ts-node src/shared/infra/database/prisma/seeds/status.seed.ts",
     "migrate:latest": " npx env-cmd -f .env.local npx prisma migrate dev",
     "start:dev": "env-cmd -f .env.local nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -22,7 +22,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "prisma": {
-    "schema": "shared/infra/database/prisma/schema.prisma"
+    "schema": "src/shared/infra/database/prisma/schema.prisma"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
