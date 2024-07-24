@@ -42,7 +42,7 @@ describe('UpdateTaskUseCase', () => {
   });
 
   describe('execute', () => {
-    it('should update a task with valid input data', async () => {
+    it('should update a task with valid input data with status inProgress', async () => {
       const params: UpdateTaskUseCaseRequestDTO = {
         id: 'existing_task_id',
         title: 'Updated Title',
@@ -101,6 +101,79 @@ describe('UpdateTaskUseCase', () => {
           title: params.title,
           text: params.text,
           startDate: expect.any(Date),
+          endDate: params.endDate,
+          statusId: params.statusId,
+        },
+      );
+      expect(taskRepository.removeTaskFromProject).toHaveBeenCalledWith(
+        params.id,
+      );
+      expect(taskRepository.addTaskToProject).toHaveBeenCalledWith(
+        params.id,
+        params.projectId,
+        1,
+      );
+    });
+
+    it('should update a task with valid input data with status Pending', async () => {
+      const params: UpdateTaskUseCaseRequestDTO = {
+        id: 'existing_task_id',
+        title: 'Updated Title',
+        text: 'Updated Text',
+        endDate: new Date(),
+        statusId: 'existing_status_id',
+        projectId: 'existing_project_id',
+      };
+
+      const existingTask = TaskFactory({
+        id: params.id,
+        title: 'Old Title',
+        text: 'Old Text',
+        startDate: null,
+        endDate: null,
+        statusId: 'old_status_id',
+        ProjectTask: [
+          {
+            projectId: params.projectId,
+            taskId: params.id,
+            position: 1,
+            Project: Object.create({}),
+          },
+        ],
+      });
+
+      const status = StatusFactory({
+        id: params.statusId,
+        type: StatusTypeEnum.pending,
+      });
+      const project = ProjectFactory({ id: params.projectId });
+
+      jest.spyOn(taskRepository, 'getOne').mockResolvedValueOnce(existingTask);
+      jest.spyOn(statusRepository, 'getOne').mockResolvedValueOnce(status);
+      jest.spyOn(projectRepository, 'getOne').mockResolvedValueOnce(project);
+      jest.spyOn(taskRepository, 'update').mockResolvedValueOnce(undefined);
+      jest
+        .spyOn(taskRepository, 'removeTaskFromProject')
+        .mockResolvedValueOnce(undefined);
+      jest
+        .spyOn(taskRepository, 'addTaskToProject')
+        .mockResolvedValueOnce(undefined);
+
+      await sut.execute(params);
+
+      expect(taskRepository.getOne).toHaveBeenCalledWith({ id: params.id });
+      expect(statusRepository.getOne).toHaveBeenCalledWith({
+        id: params.statusId,
+      });
+      expect(projectRepository.getOne).toHaveBeenCalledWith({
+        id: params.projectId,
+      });
+      expect(taskRepository.update).toHaveBeenCalledWith(
+        { id: params.id },
+        {
+          title: params.title,
+          text: params.text,
+          startDate: undefined,
           endDate: params.endDate,
           statusId: params.statusId,
         },

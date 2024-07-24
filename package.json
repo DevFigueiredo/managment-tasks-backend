@@ -83,6 +83,7 @@
       "!src/shared/utils/database.(t|j)s",
       "!src/shared/utils/function-export.(t|j)s",
       "!src/shared/utils/create-server.(t|j)s",
+      "!src/shared/utils/logger.(t|j)s",
       "!src/shared/middlewares/logger-middleware.ts",
       "!src/shared/infra/database/prisma/**/*.ts"
     ],

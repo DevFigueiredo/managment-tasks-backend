@@ -40,7 +40,42 @@ describe('GetProjectsUseCase', () => {
   });
 
   describe('execute', () => {
-    it('should return projects with completion percentage and delay status', async () => {
+    it('should return projects with completion percentage and delay status true', async () => {
+      const projects = [ProjectFactory()];
+      const tasks = [TaskFactory()];
+      const completionPercentage = 75;
+      const isDelayed = true;
+
+      jest
+        .spyOn(projectRepository, 'get')
+        .mockResolvedValueOnce(projects as Project[]);
+      jest.spyOn(taskRepository, 'get').mockResolvedValueOnce(tasks);
+
+      (calculateCompletionPercentage as jest.Mock).mockReturnValueOnce(
+        completionPercentage,
+      );
+      (checkIfDelayed as jest.Mock).mockReturnValueOnce(isDelayed);
+
+      const result = await sut.execute();
+
+      expect(projectRepository.get).toHaveBeenCalled();
+      expect(jest.spyOn(taskRepository, 'get')).toHaveBeenCalledWith({
+        projectId: projects[0].id,
+      });
+      expect(calculateCompletionPercentage).toHaveBeenCalledWith(tasks);
+      expect(checkIfDelayed).toHaveBeenCalledWith(
+        projects[0].endDate,
+        completionPercentage,
+      );
+      expect(result).toEqual([
+        {
+          ...projects[0],
+          completionPercentage,
+          isDelayed,
+        },
+      ]);
+    });
+    it('should return projects with completion percentage and delay status false', async () => {
       const projects = [ProjectFactory()];
       const tasks = [TaskFactory()];
       const completionPercentage = 75;
@@ -75,7 +110,6 @@ describe('GetProjectsUseCase', () => {
         },
       ]);
     });
-
     it('should handle empty project list', async () => {
       jest.spyOn(projectRepository, 'get').mockResolvedValueOnce([]);
 

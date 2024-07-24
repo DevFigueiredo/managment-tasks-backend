@@ -55,8 +55,8 @@ export class TaskRepository implements ITaskRepository.Repository {
       },
     });
     tasks.sort((a, b) => {
-      const positionA = a.ProjectTask[0]?.position ?? 0;
-      const positionB = b.ProjectTask[0]?.position ?? 0;
+      const positionA = a.ProjectTask[0]?.position;
+      const positionB = b.ProjectTask[0]?.position;
       return positionA - positionB;
     });
 

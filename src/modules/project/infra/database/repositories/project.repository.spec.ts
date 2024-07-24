@@ -38,6 +38,31 @@ describe('ProjectRepository', () => {
       });
       expect(result).toEqual(project);
     });
+
+    it('should create a new project with fields nullable and return it', async () => {
+      const project: Partial<Project> = ProjectFactory({
+        name: null,
+        description: null,
+        startDate: null,
+        endDate: null,
+      });
+
+      jest
+        .spyOn(prisma.project, 'create')
+        .mockResolvedValueOnce(project as PrismaProject);
+
+      const result = await repository.create(project);
+
+      expect(prisma.project.create).toHaveBeenCalledWith({
+        data: {
+          name: null,
+          description: null,
+          startDate: null,
+          endDate: null,
+        },
+      });
+      expect(result).toEqual(project);
+    });
   });
 
   describe('get', () => {

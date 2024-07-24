@@ -10,7 +10,7 @@ export class ProjectRepository implements IProjectRepository.Repository {
   async create(project: Partial<Project>): Promise<PrismaProject> {
     return this.db.project.create({
       data: {
-        name: project.name || null,
+        name: project.name,
         description: project.description || null,
         startDate: project.startDate || null,
         endDate: project.endDate || null,

@@ -1,16 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Status } from './status';
-import { Project } from './project';
-export class ProjectTasks {
-  @ApiProperty()
-  Project: Project;
-  @ApiProperty()
-  position: number;
-  @ApiProperty()
-  projectId: string;
-  @ApiProperty()
-  taskId: string;
-}
+import { ProjectTasks } from './project-task';
 export class Task {
   @ApiProperty()
   id: string;

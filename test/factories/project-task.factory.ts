@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { ProjectFactory } from './project.factory';
-import { ProjectTasks } from '@shared/domain/task';
+import { ProjectTasks } from '@src/shared/domain/project-task';
 
 export const ProjectTasksFactory = (
   projectTasks?: Partial<ProjectTasks>,

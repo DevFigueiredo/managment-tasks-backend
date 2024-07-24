@@ -1,5 +1,6 @@
 import { ApiProperty, PickType } from '@nestjs/swagger';
-import { ProjectTasks, Task } from '@shared/domain/task';
+import { Task } from '@shared/domain/task';
+import { ProjectTasks } from '@src/shared/domain/project-task';
 
 export class UpdatePositionTaskUseCaseRequestDTO {
   @ApiProperty({ type: String })

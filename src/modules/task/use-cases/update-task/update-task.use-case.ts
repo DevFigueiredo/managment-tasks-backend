@@ -40,7 +40,7 @@ export class UpdateTaskUseCase {
         title: parsedData.title,
         text: parsedData.text,
         startDate:
-          !task.endDate && status.type === StatusTypeEnum.inprogress
+          !task.startDate && status.type === StatusTypeEnum.inprogress
             ? DateNow()
             : undefined,
         endDate: parsedData.endDate,
