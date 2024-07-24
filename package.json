@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "seed:run": "env-cmd -f .env ts-node src/shared/infra/database/prisma/seeds/status.seed.ts",
+    "seed:run": "ts-node src/shared/infra/database/prisma/seeds/status.seed.ts",
     "migrate:latest": " npx env-cmd -f .env npx prisma migrate dev",
     "start:dev": "env-cmd -f .env nest start --watch",
     "start:debug": "nest start --debug --watch",
