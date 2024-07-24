@@ -62,6 +62,12 @@ jobs:
             -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
             danielfigueiredo/managment-tasks-backend:${{env.VERSION}} \
             npx prisma migrate deploy
+      - name: Run seeds
+        run: |
+          docker run --rm \
+            -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+            danielfigueiredo/managment-tasks-backend:${{env.VERSION}} \
+            npm run seed:run
 
       - name: Deploy (Webhook Trigger - Render)
         if: github.ref == 'refs/heads/develop'
@@ -69,3 +75,6 @@ jobs:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           curl "$deploy_url"
+
+      - name: Deploy URL
+        run: echo "https://managment-tasks-backend-latest.onrender.com"
