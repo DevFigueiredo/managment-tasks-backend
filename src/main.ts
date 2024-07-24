@@ -1,6 +1,6 @@
-import configuration from 'shared/config/configuration';
+import configuration from '@shared/config/configuration';
 import { AppModule } from './app.module';
-import { createServer } from 'shared/utils/create-server';
+import { createServer } from '@shared/utils/create-server';
 import { Logger } from '@nestjs/common';
 
 const config = configuration();

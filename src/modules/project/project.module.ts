@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import configuration from 'shared/config/configuration';
-import { DatabaseModule } from 'shared/infra/database/prisma';
+import configuration from '@shared/config/configuration';
+import { DatabaseModule } from '@shared/infra/database/prisma';
 import { ProjectController } from './infra/http/controllers/projects.controller';
 import { GetProjectsUseCase } from './use-cases/get-projects/get-projects.use-case';
 import { CreateProjectUseCase } from './use-cases/create-project/create-project.use-case';

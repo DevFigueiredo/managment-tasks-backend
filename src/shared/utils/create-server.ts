@@ -36,7 +36,7 @@ export const createServer = (module: any) => {
       //Salvar o json do swagger
       if (process.env.ENVIRONMENT === 'localhost')
         fs.writeFileSync(
-          './shared/docs/swagger.json',
+          './src/shared/docs/swagger.json',
           JSON.stringify(document),
         );
       useRequestLogging(app);

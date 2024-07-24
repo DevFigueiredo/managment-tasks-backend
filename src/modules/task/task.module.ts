@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import configuration from 'shared/config/configuration';
+import configuration from '@shared/config/configuration';
 import { TaskController } from './infra/http/controllers/task.controller';
-import { DatabaseModule } from 'shared/infra/database/prisma';
+import { DatabaseModule } from '@shared/infra/database/prisma';
 import { UpdateTaskUseCase } from './use-cases/update-task/update-task.use-case';
 import { GetTaskUseCase } from './use-cases/get-tasks/get-task.use-case';
 import { GetDetailTaskUseCase } from './use-cases/get-detail-task/get-detail-task.use-case';

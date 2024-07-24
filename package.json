@@ -32,6 +32,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.4.0",
     "@prisma/client": "^5.17.0",
+    "jest-mock-extended": "^3.0.7",
     "luxon": "^3.4.4",
     "morgan-body": "^2.6.9",
     "reflect-metadata": "^0.2.0",
@@ -71,14 +72,29 @@
       "json",
       "ts"
     ],
+    "collectCoverageFrom": [
+      "apps/**/*.(t|j)s",
+      "shared/**/*.(t|j)s",
+      "!apps/challenge/src/triggers/*.(t|j)s",
+      "!apps/challenge/src/function.ts",
+      "!apps/challenge/src/main.ts",
+      "!apps/**/*.module.ts",
+      "!shared/@types/**/*.(t|j)s",
+      "!shared/test/**/*.(t|j)s",
+      "!shared/utils/database.(t|j)s",
+      "!shared/utils/function-export.(t|j)s",
+      "!shared/utils/create-server.(t|j)s",
+      "!shared/middlewares/logger-middleware.ts"
+    ],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
+    "moduleNameMapper": {
+      "^@shared/(.*)$": "<rootDir>/shared/$1",
+      "^@modules/(.*)$": "<rootDir>/src/modules/$1"
+    },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
