@@ -18,20 +18,24 @@ export const createServer = (module: any) => {
         module,
         new ExpressAdapter(expressInstance),
         {
-          logger: isLocalhost ? logger : false,
+          logger: logger,
         },
       );
       const { httpAdapter } = app.get(HttpAdapterHost);
       app.useGlobalFilters(new AllExceptionsFilter(httpAdapter, logger));
 
+      const serverUrl = isLocalhost
+        ? `http://127.0.0.1:${process.env.PORT || 3000}`
+        : '';
       const config = new DocumentBuilder()
         .setTitle('Artis - API')
         .setDescription('Artis - API')
-        .setVersion('1.0')
-        .addServer('http://127.0.0.1:3000', 'URL Local')
-        .build();
+        .setVersion('1.0');
 
-      const document = SwaggerModule.createDocument(app, config);
+      if (serverUrl) {
+        config.addServer(serverUrl, 'URL API');
+      }
+      const document = SwaggerModule.createDocument(app, config.build());
       SwaggerModule.setup('docs', app, document);
       //Salvar o json do swagger
       if (process.env.ENVIRONMENT === 'localhost')

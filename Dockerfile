@@ -14,8 +14,6 @@ RUN npm install
 # Copiar o restante do código para o contêiner
 COPY . .
 
-COPY .env .env
-
 
 # Gerar o Prisma Client
 RUN npx prisma generate
