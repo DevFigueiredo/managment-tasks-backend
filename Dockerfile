@@ -21,8 +21,14 @@ RUN npx prisma generate
 # Construir a aplicação
 RUN npm run build
 
-# Expor a porta que o app vai rodar
-EXPOSE 3000
+# Copia o script de inicialização
+COPY docker-entrypoint.sh .
 
-# Comando para rodar a aplicação
-CMD ["npm", "run", "start:prod"]
+# Define permissões de execução para o script de inicialização
+RUN chmod +x docker-entrypoint.sh
+
+# Expõe a porta em que a aplicação vai rodar
+EXPOSE 3333
+
+# Comando para iniciar a aplicação
+CMD ["./docker-entrypoint.sh"]

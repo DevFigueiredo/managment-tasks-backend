@@ -24,7 +24,7 @@ describe('configuration', () => {
 
     mockEnv({});
     const defaultConfig = configuration();
-    expect(defaultConfig.port).toBe(3000);
+    expect(defaultConfig.port).toBe(3333);
   });
 
   test('returns database host and port correctly', () => {

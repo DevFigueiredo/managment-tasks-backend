@@ -25,7 +25,7 @@ export const createServer = (module: any) => {
       app.useGlobalFilters(new AllExceptionsFilter(httpAdapter, logger));
 
       const serverUrl = isLocalhost
-        ? `http://127.0.0.1:${process.env.PORT || 3000}`
+        ? `http://127.0.0.1:${process.env.PORT || 3333}`
         : '';
       const config = new DocumentBuilder()
         .setTitle('Artis - API')

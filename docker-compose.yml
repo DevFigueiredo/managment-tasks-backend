@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  nestjs:
+    build: .
+    container_name: nestjs-app
+    restart: always
+    ports:
+      - '3333:3333'
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://nestjs_user:nestjs_password@postgres:5432/nestjs_db
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: nestjs_user
+      POSTGRES_PASSWORD: nestjs_password
+      POSTGRES_DB: nestjs_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
